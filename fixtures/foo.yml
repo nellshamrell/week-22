@@ -1,0 +1,13 @@
+#
+# Default configuration
+#
+---
+john:
+  email: johnchaf@gmail.com
+  subscribe: true
+nell:
+  email: nell@gmail.com
+  subscribe: true
+bob:
+  email: bob@gmail.com
+  subscribe: true

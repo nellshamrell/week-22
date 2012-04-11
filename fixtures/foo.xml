@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration>
+  <environment name="bob">
+    <email>bob@gmail.com</email>
+    <subscribe>false</subscribe>
+  </environment >
+  <environment name="mary">
+    <email>mary@gmail.com</email>
+    <subscribe>true</subscribe>
+  </environment >
+</configuration>
