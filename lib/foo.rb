@@ -1,58 +1,46 @@
+require_relative 'my_xml'
+require_relative 'my_yml'
+
 @true = []
 @false = []
 
-### XML ###
-require 'nokogiri'
-
-configuration_root_dir = File.join(File.dirname(__FILE__),"..","fixtures")
-
-file_contents = File.read "#{configuration_root_dir}/foo.xml"
-
-configuration_data = Nokogiri::XML(file_contents).root
-
-configuration_data.xpath('environment').each do |environment|
-  
-  puts environment.xpath('@name')
-  puts environment.xpath('email').text
-  puts environment.xpath('subscribe').text
-
-  email = environment.xpath('email').text
-  subscribe = environment.xpath('subscribe').text
-  if subscribe == true
-    @true << email
-  else # subscribe == false
-    @false << email
-  end  
-
-end
-
-### YAML ###
-
-require 'YAML'
-
-configuration_root_dir = File.join(File.dirname(__FILE__),"..","fixtures")
-
-file_contents = File.read "#{configuration_root_dir}/foo.yml"
-
-configuration_data = YAML::load file_contents
-
-puts configuration_data
-
-configuration_data.map do |k,v|
-  email = v['email']
-  subscribe = v['subscribe']
-  if subscribe == true
-    @true << email
-  else # subscribe == false
-    @false << email
+def load_my_file(filename)
+  configuration_root_dir = File.join(File.dirname(__FILE__),"..","fixtures")
+  begin
+    @file_contents = File.read "#{configuration_root_dir}/#{filename}"
+  rescue Errno::ENOENT => error
+    warn "WARNING: #{error.class} - #{error}"
+    @file_contents = nil
   end
 end
 
-### MERGE & SUBTRACT FALSE FROM TRUE ###
+def parse_my_file(file)
+  if file =~ /.*\.xml$/
+    parse_my_xml
+  elsif file =~ /.*\.yml$/
+    parse_my_yml
+  end
+end
 
-@true = @true.sort.uniq.compact
-puts "@true: #{@true}"
-@false = @false.sort.uniq.compact
-puts "@false: #{@false}"
-@emails = @true - @false
-puts "@emails: #{@emails}"
+def build_my_lists(subscribe,email)
+  subscribe == true ? @true << email : @false << email
+end
+
+def merge_lists
+  @true = @true.sort.uniq.compact
+  puts "@true: #{@true}"
+  @false = @false.sort.uniq.compact
+  puts "@false: #{@false}"
+  @emails = @true - @false  # Subtract false array from true array
+  puts "@emails: #{@emails}"
+end
+
+# Pass files through command line e.g. "ruby foo.xml foo.yml foo.doc"
+files = ARGV
+puts "ARGV: #{ARGV}"
+files.each do |file|
+  puts "file: #{file}"
+  load_my_file(file)
+  parse_my_file(file)
+end
+merge_lists
