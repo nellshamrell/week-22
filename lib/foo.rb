@@ -16,21 +16,14 @@ end
 
 def parse_my_file(file)
   if file =~ /.*\.xml$/
-    x = MyXml.new
-    x.parse_my_xml(@file_contents)
+    parse_my_xml
   elsif file =~ /.*\.yml$/
     parse_my_yml
   end
 end
 
 def build_my_lists(subscribe,email)
-  puts "two"
-@true = []
-@false = []
-
-
   subscribe == true ? @true << email : @false << email
-  puts "three"
 end
 
 def merge_lists
