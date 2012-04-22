@@ -18,7 +18,7 @@ class MyXml
       subscribe = environment.xpath('subscribe').text
       subscribers << {:email => email, :subscribe => subscribe}
 
-      return subscribers
     end
+      return subscribers
   end
 end
