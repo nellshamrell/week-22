@@ -44,7 +44,6 @@ class Foo
     parse_my_file(file)
   end
   merge_lists
-=end
 
   file = ARGV
   puts "ARGV: #{ARGV}"
@@ -53,4 +52,5 @@ class Foo
   parsed = f.parse_my_file(file)
   puts parsed
   f.build_my_subscriber_list(parsed)
+=end
 end
