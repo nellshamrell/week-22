@@ -3,7 +3,7 @@ require_relative 'my_yml'
 
 class Foo
 
-  def self.load_my_file(filename)
+  def load_my_file(filename)
     configuration_root_dir = File.join(File.dirname(__FILE__),"..","fixtures")
     begin
       @file_contents = File.read "#{configuration_root_dir}/#{filename}"
@@ -13,7 +13,7 @@ class Foo
     end
   end
 
-  def self.parse_my_file(file)
+  def parse_my_file(file)
     if file =~ /.*\.xml$/
       x = MyXml.new
       x.parse_my_xml(@file_contents)
@@ -22,24 +22,20 @@ class Foo
     end
   end
 
-  def build_my_lists(subscribe,email)
+  def build_my_subscriber_list(email_list)
+    subscribers = []
 
-    @true = []
-    @false = []
+    email_list.each do |e|
+      if e[:subscribe] == "true"
+        subscribers << e[:email]
+      end
+    end
 
-    subscribe == true ? @true << email : @false << email
-  end
-
-  def self.merge_lists
-    @true = @true.sort.uniq.compact
-    puts "@true: #{@true}"
-    @false = @false.sort.uniq.compact
-    puts "@false: #{@false}"
-    @emails = @true - @false  # Subtract false array from true array
-    puts "@emails: #{@emails}"
+    return subscribers
   end
 
   # Pass files through command line e.g. "ruby foo.xml foo.yml foo.doc"
+=begin
   files = ARGV
   puts "ARGV: #{ARGV}"
   files.each do |file|
@@ -48,4 +44,13 @@ class Foo
     parse_my_file(file)
   end
   merge_lists
+=end
+
+  file = ARGV
+  puts "ARGV: #{ARGV}"
+  f = Foo.new
+  f.load_my_file(file)
+  parsed = f.parse_my_file(file)
+  puts parsed
+  f.build_my_subscriber_list(parsed)
 end

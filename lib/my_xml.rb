@@ -6,7 +6,7 @@ class MyXml
   end
 
   def parse_my_xml(file_contents)
-    subscribers = []
+    email_list = []
     configuration_data = load_config(file_contents)
     configuration_data.xpath('environment').each do |environment|
 =begin
@@ -16,9 +16,9 @@ class MyXml
 =end
       email = environment.xpath('email').text
       subscribe = environment.xpath('subscribe').text
-      subscribers << {:email => email, :subscribe => subscribe}
+      email_list << {:email => email, :subscribe => subscribe}
 
     end
-      return subscribers
+      return email_list
   end
 end

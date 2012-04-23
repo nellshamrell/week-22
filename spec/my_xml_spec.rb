@@ -13,16 +13,15 @@ describe MyXml do
       config_data = @m.load_config(@file_contents)
       config_data.should_not be_nil
     end
-
   end
 
   context 'parsing' do
     it "should be able to extract a list of emails and subscriptions" do
-      subscribers = @m.parse_my_xml(@file_contents)
-      s = subscribers.first
+      email_list = @m.parse_my_xml(@file_contents)
+      s = email_list.first
       s[:email].should == "test1@gmail.com"
       s[:subscribe].should == "false"
-      s2 = subscribers.last
+      s2 = email_list.last
       s2[:email].should == "test2@gmail.com"
       s2[:subscribe].should == "true"
     end
