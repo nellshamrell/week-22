@@ -1,0 +1,10 @@
+#
+# Testing configuration
+#
+---
+test1:
+  email: test1@gmail.com
+  subscribe: false
+test2:
+  email: test2@gmail.com
+  subscribe: true
