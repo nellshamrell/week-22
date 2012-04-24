@@ -23,34 +23,20 @@ class Foo
   end
 
   def build_my_subscriber_list(email_list)
+    true_subscribe = []
+    false_subscribe = []
+
     subscribers = []
 
+    # Seperate emails lists into true and false
     email_list.each do |e|
-      if e[:subscribe] == "true"
-        subscribers << e[:email]
-      end
+      e[:subscribe] == "true" ? true_subscribe << e[:email] : false_subscribe << e[:email]
     end
+
+    # Subtract false array from true array to weed out duplicate emails with different subscription values
+     subscribers = true_subscribe - false_subscribe
 
     return subscribers
   end
-
-  # Pass files through command line e.g. "ruby foo.xml foo.yml foo.doc"
-=begin
-  files = ARGV
-  puts "ARGV: #{ARGV}"
-  files.each do |file|
-    puts "file: #{file}"
-    load_my_file(file)
-    parse_my_file(file)
-  end
-  merge_lists
-
-  file = ARGV
-  puts "ARGV: #{ARGV}"
-  f = Foo.new
-  f.load_my_file(file)
-  parsed = f.parse_my_file(file)
-  puts parsed
-  f.build_my_subscriber_list(parsed)
-=end
 end
+
