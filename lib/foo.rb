@@ -31,17 +31,13 @@ class Foo
 
     # Seperate emails lists into true and false
     email_list.each do |e|
-      e[:subscribe] == "true" ? true_subscribe << e[:email] : false_subscribe << e[:email]
+      e[:subscribe] == "true" || e[:subscribe] == true ? true_subscribe << e[:email] : false_subscribe << e[:email]
     end
 
     # Subtract false array from true array to weed out duplicate emails with different subscription values
      subscribers = true_subscribe - false_subscribe
 
     return subscribers
-  end
-
-  def merge_lists(subscribers)
-
   end
 end
 
