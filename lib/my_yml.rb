@@ -9,7 +9,7 @@ class MyYml
   def parse_my_yml(file_contents)
     email_list = []
 
-    configuration_data = YAML::load file_contents
+    configuration_data = load_config(file_contents)
 
     configuration_data.map do |k,v|
       email = v['email']

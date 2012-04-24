@@ -18,7 +18,8 @@ class Foo
       x = MyXml.new
       x.parse_my_xml(@file_contents)
     elsif file =~ /.*\.yml$/
-      parse_my_yml
+      y = MyYml.new
+      y.parse_my_yml(@file_contents)
     end
   end
 
@@ -37,6 +38,10 @@ class Foo
      subscribers = true_subscribe - false_subscribe
 
     return subscribers
+  end
+
+  def merge_lists(subscribers)
+
   end
 end
 

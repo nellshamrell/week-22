@@ -19,6 +19,6 @@ class MyXml
       email_list << {:email => email, :subscribe => subscribe}
 
     end
-      return email_list
+    return email_list
   end
 end
